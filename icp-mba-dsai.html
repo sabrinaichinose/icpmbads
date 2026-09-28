@@ -1,0 +1,572 @@
+<title>ICP MBA DS&AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#f6f5f1;
+    --surface:#ffffff;
+    --surface-2:#f0efe9;
+    --ink:#16181c;
+    --ink-soft:#565a61;
+    --ink-faint:#8a8e95;
+    --line:#e2e0d8;
+    --accent:#213a5c;
+    --accent-ink:#ffffff;
+    --accent-soft:#e7ecf3;
+    --brand2:#b8792f;
+    --brand2-soft:#f5e9d8;
+    --danger:#a83f2b;
+    --danger-soft:#f7e6e1;
+    --warning:#a3781f;
+    --warning-soft:#f7edd9;
+    --good:#3a6f4d;
+    --good-soft:#e6efe9;
+    --shadow: 0 1px 2px rgba(20,20,15,.04), 0 8px 24px -12px rgba(20,20,15,.12);
+    --radius: 14px;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg:#14161a;
+      --surface:#1b1e23;
+      --surface-2:#20242a;
+      --ink:#edeef0;
+      --ink-soft:#aeb2b9;
+      --ink-faint:#7d818a;
+      --line:#2c3037;
+      --accent:#7fa3d6;
+      --accent-ink:#0e1116;
+      --accent-soft:#202b3a;
+      --brand2:#d6a45f;
+      --brand2-soft:#33291a;
+      --danger:#dd8871;
+      --danger-soft:#3a2420;
+      --warning:#dcb95f;
+      --warning-soft:#332a17;
+      --good:#7fbd97;
+      --good-soft:#1c2c22;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#14161a;
+    --surface:#1b1e23;
+    --surface-2:#20242a;
+    --ink:#edeef0;
+    --ink-soft:#aeb2b9;
+    --ink-faint:#7d818a;
+    --line:#2c3037;
+    --accent:#7fa3d6;
+    --accent-ink:#0e1116;
+    --accent-soft:#202b3a;
+    --brand2:#d6a45f;
+    --brand2-soft:#33291a;
+    --danger:#dd8871;
+    --danger-soft:#3a2420;
+    --warning:#dcb95f;
+    --warning-soft:#332a17;
+    --good:#7fbd97;
+    --good-soft:#1c2c22;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', -apple-system, sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    padding-inline:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  .mono, .tag, .num, table td.n, .kpi .v{
+    font-family:'IBM Plex Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  a{color:var(--accent);}
+  .wrap{max-width:880px;margin:0 auto;}
+  .measure{max-width:68ch;}
+
+  /* ---- top nav ---- */
+  .toc{
+    position:sticky;
+    top:env(safe-area-inset-top, 0px);
+    z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:880px;margin:0 auto;
+    display:flex; gap:4px; overflow-x:auto;
+    padding:10px 0;
+    scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc a{
+    flex:none;
+    text-decoration:none;
+    color:var(--ink-soft);
+    font-size:.82rem;
+    padding:6px 11px;
+    border-radius:999px;
+    white-space:nowrap;
+    border:1px solid transparent;
+  }
+  .toc a:hover{background:var(--surface-2); color:var(--ink);}
+
+  /* ---- header ---- */
+  header.cover{
+    padding-block:44px 32px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent);
+    background:var(--accent-soft);
+    padding:5px 10px; border-radius:6px;
+    margin-bottom:18px;
+  }
+  h1.title{font-size:clamp(1.7rem, 4vw, 2.5rem); line-height:1.12;}
+  .subtitle{font-size:1.05rem; color:var(--ink-soft); margin-top:10px; max-width:60ch;}
+  .meta-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:18px; margin-top:28px; padding-top:22px; border-top:1px solid var(--line);
+  }
+  .meta-grid dt{font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin-bottom:4px;}
+  .meta-grid dd{margin:0; font-size:.95rem; font-weight:500;}
+  .prio-alta{color:var(--danger); font-weight:600;}
+
+  /* ---- sections ---- */
+  section{padding-block:40px; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ink-faint);
+    font-size:.85rem;
+    display:block; margin-bottom:8px;
+  }
+  h2.sec-title{font-size:1.5rem; margin-bottom:6px;}
+  .sec-lede{color:var(--ink-soft); max-width:62ch; margin-top:10px;}
+
+  /* ---- kpi tiles ---- */
+  .kpis{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px; margin-top:26px;
+  }
+  .kpi{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px 16px 14px; box-shadow:var(--shadow);
+  }
+  .kpi .v{display:block; font-size:1.7rem; font-weight:600; color:var(--accent);}
+  .kpi .l{font-size:.82rem; color:var(--ink-soft); margin-top:4px; display:block;}
+
+  /* ---- callouts ---- */
+  .callout{
+    border-radius:var(--radius);
+    padding:16px 18px;
+    margin-top:20px;
+    border-left:3px solid var(--line);
+    background:var(--surface);
+  }
+  .callout h4{font-size:.95rem; margin-bottom:6px; display:flex; gap:8px; align-items:baseline;}
+  .callout p{margin:0; font-size:.94rem; color:var(--ink-soft);}
+  .callout.critical{border-left-color:var(--danger); background:var(--danger-soft);}
+  .callout.critical h4{color:var(--danger);}
+  .callout.important{border-left-color:var(--warning); background:var(--warning-soft);}
+  .callout.important h4{color:var(--warning);}
+  .callout .tag{font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; opacity:.75;}
+
+  /* ---- tables ---- */
+  .tbl-wrap{overflow-x:auto; margin-top:18px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface);}
+  table{border-collapse:collapse; width:100%; font-size:.88rem;}
+  th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top;}
+  thead th{
+    font-family:'IBM Plex Mono', monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--ink-faint); background:var(--surface-2); white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  td.n{text-align:right; white-space:nowrap;}
+  .cap{font-size:.82rem; color:var(--ink-faint); margin-top:8px;}
+
+  /* ---- funnel steps ---- */
+  .funnel{margin-top:26px; position:relative;}
+  .fstep{
+    display:grid; grid-template-columns:44px 1fr; gap:16px;
+    padding-block:18px;
+    position:relative;
+  }
+  .fstep:not(:last-child)::after{
+    content:"";
+    position:absolute; left:21px; top:52px; bottom:-6px;
+    width:2px; background:var(--line);
+  }
+  .fstep .fnum{
+    width:44px; height:44px; border-radius:50%;
+    background:var(--accent-soft); color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:.95rem;
+    z-index:1;
+  }
+  .fstep h4{font-size:1.02rem; margin-bottom:4px;}
+  .fstep .fstage{font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--brand2); margin-bottom:3px; display:block;}
+  .fstep p{margin:6px 0 0; color:var(--ink-soft); font-size:.92rem;}
+
+  /* ---- ICP cards ---- */
+  .icp-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px; margin-top:20px; box-shadow:var(--shadow);
+  }
+  .icp-card h3{font-size:1.1rem; margin-bottom:2px;}
+  .icp-card .icp-kicker{font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; color:var(--brand2); font-family:'IBM Plex Mono',monospace;}
+  .attr-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px 20px; margin-top:16px;}
+  .attr-list dt{font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:3px;}
+  .attr-list dd{margin:0; font-size:.9rem;}
+
+  /* ---- anti-icp grid ---- */
+  .anti-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:22px;}
+  .anti-card{
+    background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--danger);
+    border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);
+  }
+  .anti-card h4{font-size:.98rem; margin-bottom:10px;}
+  .anti-card dt{font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-top:10px;}
+  .anti-card dt:first-of-type{margin-top:0;}
+  .anti-card dd{margin:2px 0 0; font-size:.87rem; color:var(--ink-soft);}
+
+  /* ---- action plan ---- */
+  .plan-group{margin-top:28px;}
+  .plan-group h3{
+    font-size:.95rem; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.05em;
+    display:flex; align-items:center; gap:8px; margin-bottom:14px;
+  }
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .dot.urgent{background:var(--danger);}
+  .dot.short{background:var(--warning);}
+  .dot.mid{background:var(--good);}
+  .plan-item{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px 18px; margin-bottom:10px;
+  }
+  .plan-item .pnum{color:var(--ink-faint); font-family:'IBM Plex Mono',monospace; font-size:.8rem;}
+  .plan-item h4{font-size:.98rem; margin:2px 0 6px;}
+  .plan-item p{margin:0; font-size:.9rem; color:var(--ink-soft);}
+
+  footer{padding-block:32px 48px; color:var(--ink-faint); font-size:.82rem;}
+  footer .measure{max-width:62ch;}
+  footer a{color:var(--ink-faint);}
+
+  code{background:var(--surface-2); padding:1px 5px; border-radius:4px; font-size:.88em;}
+</style>
+
+<div class="toc">
+  <nav class="toc-inner">
+    <a href="#resumo">Resumo</a>
+    <a href="#alunos">Base de Alunos</a>
+    <a href="#comunicacao">Comunicação</a>
+    <a href="#mercado">Concorrência</a>
+    <a href="#gargalos">Gargalos</a>
+    <a href="#icp">ICP Ideal</a>
+    <a href="#anti-icp">Anti-ICP</a>
+    <a href="#plano">Plano de Ação</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <header class="cover">
+    <span class="eyebrow">TripleTen Brasil · Inteligência Comercial</span>
+    <h1 class="title">Análise de ICP e Estratégia de Posicionamento</h1>
+    <p class="subtitle">MBA Artificial Intelligence &amp; Data Science — diagnóstico de funil, definição de ICP, mapeamento Anti-ICP e plano de ação para elevar conversão e engajamento.</p>
+    <dl class="meta-grid">
+      <div><dt>Preparado por</dt><dd>Head of Sales · TripleTen Brasil</dd></div>
+      <div><dt>Data</dt><dd>Setembro 2026</dd></div>
+      <div><dt>Base analisada</dt><dd>37 alunos ativos · 7 coortes<br>14.992 negócios (HubSpot)</dd></div>
+      <div><dt>Prioridade</dt><dd class="prio-alta">Alta</dd></div>
+    </dl>
+  </header>
+
+  <section id="resumo">
+    <span class="sec-num">01 · Resumo Executivo</span>
+    <h2 class="sec-title">Um produto executivo vendido como bootcamp de entrada</h2>
+    <p class="sec-lede">O diagnóstico central: o MBA é atraído, comunicado e qualificado com a mesma lógica dos bootcamps de transição de carreira. Essa incoerência de posicionamento — não uma fraqueza do produto — é a principal causa da baixa conversão.</p>
+
+    <div class="kpis">
+      <div class="kpi"><span class="v">0,75%</span><span class="l">taxa de conversão no CRM (14.992 negócios do curso MBA DS)</span></div>
+      <div class="kpi"><span class="v">88%</span><span class="l">das perdas nunca tiveram uma conversa comercial real</span></div>
+      <div class="kpi"><span class="v">99,98%</span><span class="l">dos negócios sem cargo do lead registrado no CRM</span></div>
+      <div class="kpi"><span class="v">59%</span><span class="l">dos alunos ativos hoje com ritmo de aprendizado "low"</span></div>
+      <div class="kpi"><span class="v">100→35%</span><span class="l">queda de ativação entre o Sprint 1 (7d) e o Sprint 3 (42d)</span></div>
+    </div>
+
+    <div class="callout critical">
+      <h4><span class="tag">Achado crítico</span> Roteiro do closer é literalmente um roteiro de bootcamp</h4>
+      <p>O único scorecard usado para avaliar as calls de venda ("Consultoria de Carreira" no Elephan) instrui o closer a apresentar <strong>"os 4 bootcamps"</strong>, explicar o <strong>CPC (Centro de Preparação de Carreiras)</strong> e o suporte até a <strong>"primeira vaga de emprego"</strong>. Não existe roteiro nem critério de qualificação específico para o MBA.</p>
+    </div>
+
+    <div class="callout important">
+      <h4><span class="tag">Achado importante</span> A porta de entrada mistura dois públicos opostos</h4>
+      <p>A landing page do MBA fala em <strong>"gestor/executivo"</strong> e também em <strong>"ideal para iniciantes"</strong>, abrindo a grade com o módulo "Python Básico" (20h). A bio pública da marca nas redes é "Escola de Tecnologia / Bootcamps de Tecnologia" — o MBA não aparece na porta de entrada.</p>
+    </div>
+  </section>
+
+  <section id="alunos">
+    <span class="sec-num">02 · Análise da Base de Alunos</span>
+    <h2 class="sec-title">Radiografia das 7 coortes ativas</h2>
+    <p class="sec-lede">37 alunos atualmente cursando o MBA DS&amp;AI, distribuídos em 7 coortes (planilha exportada do LMS). A base não inclui alunos formados ou evadidos, nem cargo/empresa — apenas engajamento na plataforma.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Coorte</th><th>Início</th><th class="n">Alunos</th><th class="n">Ritmo baixo</th><th class="n">Ritmo alto</th><th class="n">Dias ativos/sem.</th><th class="n">Ativação S2 (21d)</th><th class="n">Ativação S3 (42d)</th></tr></thead>
+        <tbody>
+          <tr><td>Coorte 2</td><td>fev/2026</td><td class="n">7</td><td class="n">5</td><td class="n">2</td><td class="n">1,6</td><td class="n">57%</td><td class="n">57%</td></tr>
+          <tr><td>Coorte 3</td><td>mar/2026</td><td class="n">4</td><td class="n">2</td><td class="n">2</td><td class="n">3,5</td><td class="n">75%</td><td class="n">75%</td></tr>
+          <tr><td>Coorte 4</td><td>abr/2026</td><td class="n">7</td><td class="n">5</td><td class="n">2</td><td class="n">2,1</td><td class="n">71%</td><td class="n">14%</td></tr>
+          <tr><td>Coorte 5</td><td>mai/2026</td><td class="n">3</td><td class="n">2</td><td class="n">1</td><td class="n">1,7</td><td class="n">100%</td><td class="n">67%</td></tr>
+          <tr><td>Coorte 6</td><td>jun/2026</td><td class="n">3</td><td class="n">2</td><td class="n">1</td><td class="n">1,0</td><td class="n">100%</td><td class="n">33%</td></tr>
+          <tr><td>Coorte 7</td><td>jul/2026</td><td class="n">6</td><td class="n">2</td><td class="n">4</td><td class="n">3,0</td><td class="n">67%</td><td class="n">17%</td></tr>
+          <tr><td>Coorte 8</td><td>ago/2026</td><td class="n">7</td><td class="n">4</td><td class="n">3</td><td class="n">3,3</td><td class="n">71%</td><td class="n">14%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cap">Fonte: MBA_Student_List_for_interview_Sep.26.xlsx. Ativação S1 (7 dias) é 100% em todas as coortes; a queda relevante acontece entre S2 e S3.</p>
+
+    <div class="callout important" style="margin-top:28px;">
+      <h4><span class="tag">Hipótese</span> Desalinhamento de expectativa de carga horária</h4>
+      <p>O MBA exige 15–20h/semana ao longo de 9–10 meses. A queda acentuada de ativação entre 21 e 42 dias em várias coortes (ex: Coorte 4, 71%→14%; Coorte 8, 71%→14%) sugere que parte dos alunos chega sem entender o compromisso real de tempo — consequência direta de uma comunicação que enfatiza flexibilidade sem deixar claro o nível de dedicação de um MBA executivo.</p>
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:20px;">
+      <table>
+        <thead><tr><th>Aluno</th><th>Coorte</th><th>Sprint atual</th><th class="n">Progresso</th><th>Ritmo</th><th class="n">Dias ativos/sem.</th></tr></thead>
+        <tbody>
+          <tr><td>Deivison Rita</td><td>7</td><td>5</td><td class="n">55%</td><td>high</td><td class="n">6</td></tr>
+          <tr><td>Lucas</td><td>7</td><td>5</td><td class="n">52%</td><td>high</td><td class="n">5</td></tr>
+          <tr><td>Ricardo</td><td>3</td><td>18</td><td class="n">95%</td><td>high</td><td class="n">3</td></tr>
+          <tr><td>hélio gil</td><td>4</td><td>13</td><td class="n">97%</td><td>high</td><td class="n">3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cap">Perfis com maior engajamento na amostra atual — todos com ritmo "high" e presença ativa na maior parte da semana.</p>
+  </section>
+
+  <section id="comunicacao">
+    <span class="sec-num">03 · Auditoria de Comunicação Digital</span>
+    <h2 class="sec-title">O produto certo, com a mensagem errada na porta de entrada</h2>
+    <p class="sec-lede">A mensagem executiva existe e já está validada — mas só aparece depois que o lead passou pela home, pelas redes sociais e pela landing page, onde o discurso se mistura com o de bootcamp.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Canal</th><th>O que comunica hoje</th><th>Alinhamento</th></tr></thead>
+        <tbody>
+          <tr><td>Home tripleten.com.br</td><td>"A melhor escola de TI dos EUA" — bootcamps em destaque na navegação; MBA aparece como oferta complementar ("Já está mirando em um MBA?")</td><td>✗ Bootcamp-first</td></tr>
+          <tr><td>Página /mba/ geral</td><td>Diferencia bem MBA de bootcamp na FAQ: "Bootcamps = primeiro emprego, sem diploma. MBAs = pós-graduação MEC... perfis de maior senioridade"</td><td>✓ Correto</td></tr>
+          <tr><td>LP do MBA DS&amp;AI</td><td>Fala em "gestor/executivo" e "liderar equipes técnicas", mas também "ideal para iniciantes" e abre com o módulo "Python Básico" (20h)</td><td>⚠ Ambíguo</td></tr>
+          <tr><td>Sales presentation</td><td>Tom executivo consistente: "posições de liderança", "decisões que movem o negócio", assume experiência prévia</td><td>✓ Correto</td></tr>
+          <tr><td>Instagram / LinkedIn</td><td>Handle e bio públicos: "Escola de Tecnologia" / "Bootcamps de Tecnologia" — sem menção ao MBA na porta de entrada</td><td>✗ Bootcamp-first</td></tr>
+          <tr><td>Ementa (PDF)</td><td>Não renderizada nesta análise (visualizador sem OCR disponível) — recomenda-se envio do texto para revisão de alinhamento curricular</td><td>— Não avaliado</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="mercado">
+    <span class="sec-num">04 · Análise de Mercado e Concorrência</span>
+    <h2 class="sec-title">Onde a TripleTen está no mapa competitivo</h2>
+    <p class="sec-lede">O mercado brasileiro de MBAs em IA para negócios tem dois polos: acadêmico-técnico (FGV, Ibmec, USP/Esalq) e executivo sem exigência técnica (FDC, PUC-Rio/PUCPR, XP Educação). A TripleTen tem o enquadramento certo para o segundo polo, mas ainda não comunica com a mesma clareza.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Instituição</th><th>Público declarado</th><th>Pré-requisito técnico</th><th>Duração</th><th class="n">Preço</th></tr></thead>
+        <tbody>
+          <tr><td>FGV — MBA IA e Analytics</td><td>Perfil técnico-analítico, gestores de dados</td><td>Alto</td><td>19 meses</td><td class="n">Sob consulta</td></tr>
+          <tr><td>Ibmec — MBA IA, DS &amp; Big Data</td><td>Perfil de dados/TI ou gestor</td><td>Médio</td><td>—</td><td class="n">—</td></tr>
+          <tr><td>USP/Esalq — MBA DS, IA e Analytics</td><td>Viés analítico</td><td>Médio-alto</td><td>~18 meses</td><td class="n">~R$794/mês</td></tr>
+          <tr><td>PUC-Rio/PUCPR — IA e Negócios</td><td>Líderes não-técnicos</td><td>Baixo</td><td>12 meses</td><td class="n">Sob consulta</td></tr>
+          <tr><td>Fundação Dom Cabral</td><td>Diretores, gerentes, coordenadores</td><td>Baixo</td><td>12 meses</td><td class="n">Parcelado 21x</td></tr>
+          <tr><td>XP Educação — MBA Executivo IA</td><td>Qualquer background</td><td>Nenhum</td><td>6 meses</td><td class="n">R$14.070 (lista)</td></tr>
+          <tr><td>StartSe — AI First</td><td>Executivos sem base técnica</td><td>Nenhum</td><td>3 meses</td><td class="n">~R$1.000–2.500</td></tr>
+          <tr><td>MIT Sloan Executive</td><td>Altos executivos</td><td>Nenhum formal</td><td>10 dias</td><td class="n">US$24.500</td></tr>
+          <tr style="background:var(--accent-soft);"><td><strong>TripleTen — MBA DS&amp;AI</strong></td><td>Ambíguo na LP</td><td>Não exigido, mas currículo começa do zero</td><td>10 meses / 720h</td><td class="n">R$3.080–3.570/mês</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cap">Pesquisa web realizada em set/2026; valores e condições podem ter mudado.</p>
+
+    <div class="callout important">
+      <h4><span class="tag">Leitura</span> Espaço aberto no "meio-termo" não ocupado</h4>
+      <p>FDC e PUC-Rio/PUCPR provam que "sem exigência técnica + certificação MEC + 12 meses" é modelo validado no mercado premium. XP é o concorrente mais direto, com ticket de lista próximo ao dobro do praticado pela TripleTen. Há espaço para reposicionar o preço como vantagem — sem parecer barato demais para ser sério — desde que a comunicação pare de sinalizar "bootcamp".</p>
+    </div>
+  </section>
+
+  <section id="gargalos">
+    <span class="sec-num">05 · Mapeamento de Gargalos do Funil</span>
+    <h2 class="sec-title">Onde o funil vaza, etapa por etapa</h2>
+    <p class="sec-lede">No CRM, dos 14.992 negócios do curso MBA DS, apenas 112 (0,75%) fecharam venda. 88% das perdas (Never replied, Stopped answering, Wrong number, Duplicate) nunca chegaram a uma conversa real — o gargalo começa antes do closer.</p>
+
+    <div class="funnel">
+      <div class="fstep">
+        <div class="fnum">1</div>
+        <div>
+          <span class="fstage">Atração · Instagram / LinkedIn / Google</span>
+          <h4>Anúncios não filtram decisores de curiosos</h4>
+          <p>Criativos não exigem nível de experiência mínimo, cargo ou renda, e usam linguagem de transição de carreira ("mude de área", "novo emprego"). Resultado: alto volume de leads fora de perfil chegando ao SDR — coerente com os 88% de negócios que nunca respondem no CRM.</p>
+        </div>
+      </div>
+      <div class="fstep">
+        <div class="fnum">2</div>
+        <div>
+          <span class="fstage">Nutrição · Landing page e formulário</span>
+          <h4>Nenhum filtro qualificador antes do agendamento</h4>
+          <p>O formulário de captura não pergunta cargo atual, tempo de experiência ou orçamento. A LP mistura mensagem executiva com "ideal para iniciantes", então o próprio texto não desqualifica ninguém.</p>
+        </div>
+      </div>
+      <div class="fstep">
+        <div class="fnum">3</div>
+        <div>
+          <span class="fstage">Qualificação · SDR</span>
+          <h4>Sem roteiro dedicado ao MBA</h4>
+          <p>99,98% dos negócios não têm cargo do contato registrado no CRM — o SDR não está capturando o dado que mais importa para qualificar um produto executivo antes de agendar o closer.</p>
+        </div>
+      </div>
+      <div class="fstep">
+        <div class="fnum">4</div>
+        <div>
+          <span class="fstage">Fechamento · Closer</span>
+          <h4>Scorecard de avaliação é de bootcamp</h4>
+          <p>O roteiro "Consultoria de Carreira" usado no Elephan cobra apresentar "os 4 bootcamps" e o CPC — não existe critério de avaliação específico para uma call de MBA executivo.</p>
+        </div>
+      </div>
+      <div class="fstep">
+        <div class="fnum">5</div>
+        <div>
+          <span class="fstage">Pós-matrícula · Onboarding</span>
+          <h4>Queda de ativação nas primeiras 6 semanas</h4>
+          <p>Ativação cai de 100% (Sprint 1) para 35% em média (Sprint 3) entre as coortes analisadas — sinal de expectativa de carga horária mal alinhada na venda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="icp">
+    <span class="sec-num">06 · Perfil de Cliente Ideal (ICP)</span>
+    <h2 class="sec-title">Quem tem mais chance de fechar e de concluir o programa</h2>
+    <p class="sec-lede">O CRM ainda não captura cargo/empresa (seção 05), então o ICP abaixo foi construído a partir da proposta de valor já validada na sales presentation, do benchmarking de mercado e da lógica de upskilling do produto — deve ser confirmado assim que a captura de cargo virar obrigatória.</p>
+
+    <div class="icp-card">
+      <span class="icp-kicker">ICP principal</span>
+      <h3>O gestor em ascensão</h3>
+      <dl class="attr-list">
+        <div><dt>Cargo atual</dt><dd>Coordenador, gerente, especialista sênior, consultor</dd></div>
+        <div><dt>Experiência</dt><dd>5–15 anos na mesma área ou setor</dd></div>
+        <div><dt>Área de atuação</dt><dd>Marketing, operações, produto, finanças, vendas, RH, estratégia</dd></div>
+        <div><dt>Objetivo com o MBA</dt><dd>Avançar na função atual ou liderar iniciativas de dados/IA</dd></div>
+        <div><dt>Capacidade financeira</dt><dd>Compatível com R$3.000–3.600/mês por 9–10 meses</dd></div>
+        <div><dt>Dor principal</dt><dd>Precisa liderar decisões de dados/IA sem ter base técnica formal</dd></div>
+      </dl>
+    </div>
+
+    <div class="icp-card">
+      <span class="icp-kicker">ICP secundário</span>
+      <h3>O executivo corporativo</h3>
+      <dl class="attr-list">
+        <div><dt>Cargo atual</dt><dd>Diretor, head, gerente sênior</dd></div>
+        <div><dt>Contexto</dt><dd>Empresa com cultura de dados emergente; lidera times técnicos sem background técnico</dd></div>
+        <div><dt>Objetivo</dt><dd>Credencial MEC para legitimar decisões data-driven</dd></div>
+        <div><dt>Sensibilidade a preço</dt><dd>Baixa — prioriza ROI de carreira e reconhecimento da certificação</dd></div>
+      </dl>
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:24px;">
+      <table>
+        <thead><tr><th>Pergunta de qualificação</th><th>Resposta que qualifica</th><th>Resposta que desqualifica</th></tr></thead>
+        <tbody>
+          <tr><td>"Qual é seu cargo e há quantos anos está na área?"</td><td>Sênior+/gestor, 5+ anos</td><td>Recém-formado, estágio, "ainda não trabalho com isso"</td></tr>
+          <tr><td>"O que te trouxe a buscar um MBA agora?"</td><td>Crescer para liderança, aplicar dados no cargo atual</td><td>"Quero mudar de área completamente"</td></tr>
+          <tr><td>"Você tem 15–20h/semana para dedicar?"</td><td>"Sim, já organizo assim"</td><td>"Depende do mês", hesitação</td></tr>
+          <tr><td>"Como avalia a parcela de R$3.080–3.570?"</td><td>"Está dentro do esperado"</td><td>"É muito alto", pede parcelamento maior</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="anti-icp">
+    <span class="sec-num">07 · Matriz Anti-ICP</span>
+    <h2 class="sec-title">Quem desqualificar no início do funil — e por quê</h2>
+    <p class="sec-lede">Desqualificar cedo economiza tempo do SDR e do closer e evita evasão pós-matrícula. Esses perfis não são "alunos ruins" — são alunos de outro produto.</p>
+
+    <div class="anti-grid">
+      <div class="anti-card">
+        <h4>O transicionador sem base</h4>
+        <dt>Sinal</dt><dd>"Quero mudar de carreira para tech", sem experiência profissional consolidada</dd>
+        <dt>Por que desqualificar</dt><dd>O MBA não foi desenhado para iniciantes absolutos — risco de abandono ou reembolso</dd>
+        <dt>Redirecionar para</dt><dd>Bootcamp de Análise/Ciência de Dados</dd>
+      </div>
+      <div class="anti-card">
+        <h4>O caçador de emprego imediato</h4>
+        <dt>Sinal</dt><dd>"Preciso de emprego em 3 meses", pergunta sobre garantia de vaga</dd>
+        <dt>Por que desqualificar</dt><dd>MBA de 9–10 meses não é solução de recolocação imediata</dd>
+        <dt>Redirecionar para</dt><dd>Bootcamp com suporte de carreira incluído</dd>
+      </div>
+      <div class="anti-card">
+        <h4>O sensível ao preço</h4>
+        <dt>Sinal</dt><dd>Insiste em desconto, compara com opções de R$200–500/mês</dd>
+        <dt>Por que desqualificar</dt><dd>Risco de inadimplência e abandono por pressão financeira</dd>
+        <dt>Redirecionar para</dt><dd>Nutrição de conteúdo gratuito, sem agendar closer agora</dd>
+      </div>
+      <div class="anti-card">
+        <h4>O técnico júnior buscando execução</h4>
+        <dt>Sinal</dt><dd>Já programa ou atua como analista/cientista de dados júnior, busca hard skills técnicas</dd>
+        <dt>Por que desqualificar</dt><dd>Busca aprofundamento técnico, não visão de negócio/liderança</dd>
+        <dt>Redirecionar para</dt><dd>Curso técnico avançado ou especialização</dd>
+      </div>
+    </div>
+  </section>
+
+  <section id="plano">
+    <span class="sec-num">08 · Plano de Ação</span>
+    <h2 class="sec-title">Correções práticas por etapa do funil</h2>
+    <p class="sec-lede">Organizadas por prioridade, cobrindo landing page, comunicação digital, roteiro comercial e higiene de dados.</p>
+
+    <div class="plan-group">
+      <h3><span class="dot urgent"></span>Urgente — impacto imediato na conversão</h3>
+      <div class="plan-item"><span class="pnum">01</span><h4>Landing page do MBA</h4><p>Remover o módulo "ideal para iniciantes"/"Python Básico" da dobra principal. Manter só a mensagem "Sou gestor/executivo" como discurso único, não como uma opção entre outras.</p></div>
+      <div class="plan-item"><span class="pnum">02</span><h4>Formulário de captação</h4><p>Adicionar campos obrigatórios de cargo atual e tempo de experiência, sincronizados com o campo Job Title no HubSpot.</p></div>
+      <div class="plan-item"><span class="pnum">03</span><h4>Roteiro de qualificação do SDR</h4><p>Criar script específico para o MBA com as perguntas da Matriz Anti-ICP, obrigando registro de cargo/senioridade/orçamento antes de agendar o closer.</p></div>
+    </div>
+
+    <div class="plan-group">
+      <h3><span class="dot short"></span>Curto prazo — qualidade do funil e prova social</h3>
+      <div class="plan-item"><span class="pnum">04</span><h4>Redes sociais e bio</h4><p>Trocar a bio pública de "Escola de Tecnologia/Bootcamps" por linguagem que inclua o MBA executivo; criar linha editorial própria com cases de gestores.</p></div>
+      <div class="plan-item"><span class="pnum">05</span><h4>Segmentação de mídia paga</h4><p>Segmentar campanhas do MBA por cargo/senioridade (LinkedIn Ads, Meta) em vez de usar os mesmos criativos de bootcamp.</p></div>
+      <div class="plan-item"><span class="pnum">06</span><h4>Scorecard do closer</h4><p>Criar avaliação Elephan dedicada ao MBA, removendo referências a "os 4 bootcamps" e "CPC", substituindo por critérios de ROI executivo e credencial MEC.</p></div>
+    </div>
+
+    <div class="plan-group">
+      <h3><span class="dot mid"></span>Médio prazo — retenção e higiene de dados</h3>
+      <div class="plan-item"><span class="pnum">07</span><h4>Higiene do CRM</h4><p>Auditar e limpar os ~11.400 negócios "Never replied/Stopped answering/Duplicate" do curso MBA DS para parar de distorcer métricas de conversão.</p></div>
+      <div class="plan-item"><span class="pnum">08</span><h4>Onboarding pós-matrícula</h4><p>Sessão de alinhamento de expectativas na semana 0, detalhando carga horária total e o que acontece em caso de inatividade.</p></div>
+      <div class="plan-item"><span class="pnum">09</span><h4>Ementa e syllabus</h4><p>Validar com o time acadêmico se a ementa reflete o mesmo enfoque executivo da sales presentation — pendente de leitura do PDF.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="measure"><strong>TripleTen Brasil — Análise confidencial de uso interno</strong> · Setembro 2026</p>
+    <p class="measure">Fontes: CRM HubSpot (Deal/Contact, campo <code>course</code>), Elephan (insights de vendas e scorecard "Consultoria de Carreira"), planilha MBA_Student_List_for_interview_Sep.26.xlsx, tripleten.com.br (home, /mba/, LP do MBA DS&amp;AI, sales presentation), pesquisa de mercado (FGV, Ibmec, USP/Esalq, PUC-Rio/PUCPR, Fundação Dom Cabral, XP Educação, StartSe, MIT Sloan).</p>
+  </footer>
+
+</div>
